@@ -7,36 +7,45 @@ const config = {
   db: 'rethinkdb_test'
 };
 
-function createTables(conn) {
-  console.log('Creating tables');
-  return r.dbCreate(config.db).run(conn)
-     // if db already exists creating tables anyway
-    .finally(() => r.tableCreate('todos').run(conn))
-    .finally(() => r.table('todos').indexCreate('createdAt').run(conn))
-    .finally(() => r.table('todos').indexWait('createdAt').run(conn))
-    .then(result => conn)
-    .error(err => conn);
+async function createTables(conn) {
+  console.log('Configuring db...');
+
+  try {
+    // try to create the database
+    await r.dbCreate(config.db).run(conn);
+    console.log('Database created.');
+  } catch (err) {
+    console.log('Database exists.')
+  } finally {
+    // Create tables and indexes
+    await r.tableCreate('todos').run(conn);
+    await r.table('todos').indexCreate('createdAt').run(conn);
+    await r.table('todos').indexWait('createdAt').run(conn);
+    console.log('Tables created.');
+  }
+
 }
 
 function verifyTables(conn) {
   return r.table('todos').indexWait('createdAt').run(conn)
 }
 
-const connect = new Promise((resolve, reject) => {
-  r.connect(config)
-   .then(conn => {
-      // Verify if the table is created
-      verifyTables(conn)
-        .then((err, result) => {
-          console.log('Tables and indexes available');
-          resolve(conn);
-        })
-        // If tables aren't found create them
-        .error(() => createTables(conn).then(() => resolve(conn)))
-    })
-    .catch(err => reject(err));
-});
+async function getDatabase () {
+  let conn = await r.connect(config);
 
-module.exports = {
-  getConnection: () => connect
-};
+  try {
+    // Verify if the table is created
+    await verifyTables(conn);
+    console.log('Tables and indexes available');
+  } catch (err) {
+    // If tables aren't found create them
+    await createTables(conn);
+  }
+
+  conn.close();
+
+  console.log('Database is ready!');
+  return r;
+}
+
+module.exports = { getDatabase };

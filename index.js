@@ -1,13 +1,11 @@
-const r = require('rethinkdb');
 const db = require('./database');
 
-function onConnect(conn) {
-  console.log('Connected');
-
+async function connect() {
+  try {
+    const r = await db.getDatabase();
+  } catch (err) {
+    console.log(err);
+  }
 }
 
-function onError() {
-  console.log('Connection error');
-}
-
-db.getConnection().then(onConnect).catch(onError);
+connect();
