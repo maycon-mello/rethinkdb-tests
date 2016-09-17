@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <textarea></textarea>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      var socket = io.connect();
+      var area = document.querySelector('textarea');
+      area.onKeyPress = post;
+      socket.on("update", function(data) {
+        console.log("Update:", data);
+        document.querySelector('textarea').value = data.value;
+      });
+    </script>
+    <script src="client.js"></script>
+  </body>
+</html>
