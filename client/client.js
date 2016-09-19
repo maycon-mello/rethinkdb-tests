@@ -1,5 +1,5 @@
-function post(evt) {
-  var value = evt.target.value;
+function put(value) {
+  var value = value;
 
   fetch('/todo', {
     headers: {
@@ -7,6 +7,6 @@ function post(evt) {
       'Content-Type': 'application/json'
     },
     method: 'post',
-    body: JSON.stringify({ value: data });
+    body: JSON.stringify({ value: data }),
   })
 }

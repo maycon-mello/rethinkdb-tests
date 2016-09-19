@@ -1,9 +1,10 @@
+import { initDB } from '../database';
+
 /**
- * Clear and create test database data
+ * Connect database
  *
  */
-before('Global setup', async () => {
-  // Clear db data
-  // await Todos.remove();
-
-})
+before(async () => {
+  console.log("Init db");
+  await initDB();
+});

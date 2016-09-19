@@ -1,11 +1,10 @@
 import { expect } from 'chai';
-import Note from '../model/note';
+import { Todo } from '../../model';
 
 describe('Todos route', () => {
-
   it('Get list', done => {
     Request
-      .get('/notes')
+      .get('/todos')
       .expect(200)
       .end((err, res) => {
         done(err);

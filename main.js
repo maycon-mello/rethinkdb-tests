@@ -1,5 +1,4 @@
 import { r, initDB, getConnection } from './database';
-import { Todo } from './model';
 import { app, io } from './server';
 
 initialize();
@@ -17,7 +16,7 @@ async function listenChanges() {
  *
  * Initialize de database and crate todos
  */
-async function initialize() {
+export async function initialize() {
   try {
     await initDB();
   } catch (err) {
@@ -25,16 +24,18 @@ async function initialize() {
   }
 
   listenChanges();
+
+  return app;
 }
 
-/**
- *
- * Create a random todo
- */
-async function createTodo() {
-  let todo = await Todo.createTodo({
-    value: 'Test 1'
-  });
-
-  console.log('Todo created');
-}
+// /**
+//  *
+//  * Create a random todo
+//  */
+// async function createTodo() {
+//   let todo = await Todo.createTodo({
+//     value: 'Test 1'
+//   });
+//
+//   console.log('Todo created');
+// }

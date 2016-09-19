@@ -11,6 +11,7 @@ async function initDB() {
     await verifyTables(conn);
     Logger.info('tables and indexes available');
   } catch (err) {
+    console.log(err);
     // If tables isn't found create them
     await migrate(conn);
   }

@@ -1,5 +1,5 @@
 export default {
-  db: {
+  rethink: {
     host: 'localhost',
     port: 28015,
     authKey: '',

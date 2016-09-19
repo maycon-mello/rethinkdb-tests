@@ -10,7 +10,9 @@
     <script>
       var socket = io.connect();
       var area = document.querySelector('textarea');
-      area.onKeyPress = post;
+      area.onKeyPress = function(evt) {
+
+      };
       socket.on("update", function(data) {
         console.log("Update:", data);
         document.querySelector('textarea').value = data.value;

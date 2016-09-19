@@ -1,11 +1,11 @@
 export default {
-  db: {
+  rethink: {
     host: 'localhost',
     port: 28015,
     authKey: '',
     db: 'todos_test'
   },
   express: {
-    port: 8090
+    port: 8095
   }
 }

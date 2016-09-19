@@ -9,7 +9,7 @@ let connection;
  */
 export default async function () {
   if (!connection) {
-    connection = await r.connect(config.db);
+    connection = await r.connect(config.rethink);
   }
 
   return connection;

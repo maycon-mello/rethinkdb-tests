@@ -9,9 +9,9 @@ router.post('/', (req, res) => {
   res.end('');
 });
 
-router.get('/:id', (req, res) => {
+router.get('/', (req, res) => {
   res.json({
-    test: req.params.id
+    test: 'test'
   });
 });
 
